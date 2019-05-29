@@ -1,0 +1,143 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div>
+        <h1>
+          Géré Les Clients
+        </h1>
+      </div>
+      <ol class="breadcrumb">
+        <li><a><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a>Géré Les Clients</a></li>
+      </ol>
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Liste Des Clients En Attente</h3>
+            </div>
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>E-Mail</th>
+                  <th>Nom</th>
+                  <th>Prenom</th>
+                  <th>Info</th>
+                  <th>Approuver</th>
+                  <th>Supprimer</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  *ngFor="let u of users">
+                  <ng-template  [ngIf]="u.etat=='0'">
+                  <td>
+                    <button class="btn btn-warning btn-xs" data-title="mail" [routerLink]="['/home/mail',u._id]"><span class="fa fa-envelope"></span>
+                      Envoyer Un Mail
+                    </button>
+                  </td>
+                  <td>{{u.nom}}</td>
+                  <td>{{u.prenom}}</td>
+                  <td>
+                      <button class="btn btn-info btn-xs" data-title="Info" [routerLink]="['/home/infoclient',u._id]"> <span class="fa fa-folder-open"></span> Info
+                    </button>
+                  </td>
+                  <td>
+                    <button class="btn btn-warning btn-xs" data-title="Approuver" (click)="approuved(u._id)"><span
+                      class="fa fa-check-square"></span> Approuver
+                    </button>
+                  </td>
+                  <td>
+                    <button class="btn btn-danger btn-xs" data-title="Supprimer" (click)="remove(u._id)"><span
+                      class="glyphicon glyphicon-trash"></span> Supprimer
+                    </button>
+                  </td>
+                  </ng-template >
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Liste Des Clients</h3>
+            </div>
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>E-Mail</th>
+                  <th>Nom</th>
+                  <th>Prenom</th>
+                  <th>Info</th>
+                  <th>Historique</th>
+                  <th>Supprimer</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  *ngFor="let u of users">
+                    <ng-template  [ngIf]="u.etat=='1'">
+                     <td>
+                       <button class="btn btn-warning btn-xs" data-title="mail" [routerLink]="['/home/mail',u._id]"><span class="fa fa-envelope"></span>
+                         Envoyer Un Mail
+                       </button>
+                     </td>
+                     <td>{{u.nom}}</td>
+                     <td>{{u.prenom}}</td>
+                     <td>
+                       <button class="btn btn-info btn-xs" data-title="Info" [routerLink]="['/home/infoclient',u._id]"><span class="fa fa-folder-open"></span> Info
+                       </button>
+                     </td>
+                     <td>
+                       <button class="btn btn-warning btn-xs" data-title="Historique" (click)="historique()"><span
+                         class="fa fa-check-square"></span> Historique
+                       </button>
+                     </td>
+                     <td>
+                       <button class="btn btn-danger btn-xs" data-title="Supprimer" (click)="remove(u._id)"><span
+                         class="glyphicon glyphicon-trash"></span> Supprimer
+                       </button>
+                     </td>
+                    </ng-template >
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+

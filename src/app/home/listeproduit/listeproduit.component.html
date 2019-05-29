@@ -1,0 +1,217 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div>
+        <h1>
+          Géré Les Produits
+        </h1>
+        <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#add1"><h5><i
+          class="fa fa-plus-square"></i> Nouveau Produit</h5></button>&nbsp;&nbsp;
+      </div>
+      <ol class="breadcrumb">
+        <li><a><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a>Géré Les Produits</a></li>
+      </ol>
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Liste Des Produits</h3>
+              <div class="search-container" class="btn pull-right">
+               </div>
+            </div>
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Modifier Image</th>
+                  <th>Nom</th>
+                  <th>Prix</th>
+                  <th>Stock</th>
+                  <th>Info</th>
+                  <th>Modifier</th>
+                  <th>Supprimer</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let p of produits">
+                  <td><img src="http://localhost:8080/galerie/images/{{p.picture}}"  width="50" height="50"> &nbsp;
+                    <button class="btn btn-warning btn-xs" data-title="Modifier"
+                            [routerLink]="['/home/image',p._id]"><span
+                      class="glyphicon glyphicon-pencil"></span> Modifier
+                    </button>
+                  </td>
+                  <td>{{p.nom}}</td>
+                  <td>{{p.prix}}</td>
+                  <td>{{p.stock}}</td>
+                  <td>
+                    <button class="btn btn-info btn-xs" data-title="Info" [routerLink]="['/home/infoproduit',p._id]">
+                      <span class="fa fa-folder-open"></span> Info
+                    </button>
+                  </td>
+                  <td>
+                    <button class="btn btn-warning btn-xs" data-title="Modifier"
+                            [routerLink]="['/home/modalcomponent',p._id]"><span
+                      class="glyphicon glyphicon-pencil"></span> Modifier
+                    </button>
+                  </td>
+                  <td>
+                    <button class="btn btn-danger btn-xs" data-title="Supprimer" (click)="remove(p._id)"><span
+                      class="glyphicon glyphicon-trash"></span> Supprimer
+                    </button>
+                  </td>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="example-modal">
+  <div class="modal" id="add1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title"><strong class="text-yellow">Ajouter Un Nouveau Produit</strong></h3>
+        </div>
+        <div class="box-body">
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit(this.tab)">
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <tbody>
+              <tr>
+                <th style="width:30%;">picture :</th>
+                <td>
+                  <div class="form-group">
+                    <label for="exampleInputFile"></label>
+                    <input type="file" id="exampleInputFile" multiple (change)="handleFileInput($event.target.files)">
+                    <p class="help-block">Ajouter votre image principale.</p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>Nom :</th>
+                <td><input type="text" formControlName="nom" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.nom.errors }"/></td>
+                <div *ngIf="submitted && f.nom.errors" class="invalid-feedback">
+                  <div *ngIf="f.nom.errors.required" class=" btn-danger btn-xs">champ obligatoire</div>
+                </div>
+              </tr>
+              <tr>
+                <th>Prix :</th>
+                <td><input type="text" formControlName="prix" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.prix.errors }"/></td>
+                <div *ngIf="submitted && f.prix.errors" class="invalid-feedback">
+                  <div *ngIf="f.prix.errors.required" class=" btn-danger btn-xs">champ obligatoire</div>
+                </div>
+              </tr>
+              <tr>
+                <th>Stock :</th>
+                <td><input type="number" formControlName="stock" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.stock.errors }"/></td>
+                <div *ngIf="submitted && f.stock.errors" class="invalid-feedback">
+                  <div *ngIf="f.stock.errors.required" class=" btn-danger btn-xs">champ obligatoire</div>
+                </div>
+              </tr>
+              <tr>
+                <th>Catégorie:</th>
+                <td>
+                  <select formControlName="categorie" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.categorie.errors }" (click)="getAllSouscategorie()">
+                    <option [value]="cat._id" *ngFor="let cat of categories">{{cat.nom}}</option>
+
+                  </select>
+                  <div *ngIf="submitted && f.categorie.errors" class="invalid-feedback">
+                    <div *ngIf="f.categorie.errors.required" class=" btn-danger btn-xs" >champ obligatoire</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>Sous Catégorie:</th>
+                <td>
+                  <select formControlName="souscategorie" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.souscategorie.errors }">
+                    <option [value]="souscat._id" *ngFor="let souscat of souscategorie">{{souscat.nom}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.souscategorie.errors" class="invalid-feedback">
+                    <div *ngIf="f.souscategorie.errors.required" class=" btn-danger btn-xs">champ obligatoire</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>Indication :</th>
+                <td><textarea rows="3" formControlName="indication" class="form-control"></textarea></td>
+              </tr>
+              <tr>
+                <th>Presentation :</th>
+                <td><textarea rows="3" formControlName="presentation" class="form-control"></textarea></td>
+              </tr>
+
+              <tr>
+                <th>Conseil Utilisation :</th>
+                <td><textarea rows="3" formControlName="conseilutilisation" class="form-control"></textarea></td>
+              </tr>
+              <tr>
+                <th>Contre Indication :</th>
+                <td><textarea rows="3" formControlName="contreindication" class="form-control"></textarea></td>
+              </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary pull right" >Enregistrer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="example-modal">
+  <div class="modal" id="show">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title"><strong class="text-yellow">{{produit.nom}}</strong></h3>
+        </div>
+        <div class="box-body">
+          <tbody>
+          <div class="form-group">
+            <tr>
+              <th>picture :</th>
+              <td><img src="http://localhost:8080/galerie/images/{{produit.galerie}}" width="150" height="150"></td>
+            </tr>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
+          </div>
+          </tbody>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
