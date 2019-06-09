@@ -1,3 +1,21 @@
+c'est la partie admin d'un projet de vente en ligne des produits paramédicales. dans cette partie on trouve :
+
+connexion
+L'ajout d'un produit
+La modification d'un produit ainsi sa photo
+Suppression d'un produit
+Voir les infos d'un produit
+L'ajout d'une sous catégorie
+Suppression d'une sous catégorie
+L'ajout d'une catégorie
+Suppression d'une catégorie
+Accepter un nouveau client
+Refuser un nouveau client
+voir les informations d'un nouveau client
+envoyer un e-mail à un nouveau client
+Refuser un client
+voir les informations d'un client
+envoyer un e-mail à un client
 # Partiadmin
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.3.
